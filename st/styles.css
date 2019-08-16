@@ -70,7 +70,14 @@ main > section > h3 {
     font-size: 1.2em;
     color: #36425b;
     text-align: center;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.15em;
+}
+
+main > section > code {
+    display: block;
+    text-align: center;
+    color: #36425b;
+    margin-bottom: 1em;
 }
 
 main > section > button {
@@ -83,6 +90,7 @@ main > section > button {
 
 main > section > button.disabled {
     cursor: not-allowed;
+    filter: grayscale(1);
 }
 
 main > section > div {
