@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://user-images.githubusercontent.com/30767528/63179442-6705ed80-c04c-11e9-8f2b-6b2297e66961.png" alt="Logo">
+    <img src="https://user-images.githubusercontent.com/30767528/63182165-2c9f4f00-c052-11e9-931a-6d4aae6e621e.png" alt="Logo">
 </h1>
 
 <h3 align="center">
@@ -90,7 +90,14 @@ const widget = Widgetify({
 
     // Event listeners
     onShow(instance) {},
-    onHide(instance) {}
+    onHide(instance) {},
+
+    // Before - and after repositioning eveents. 
+    beforeRepos(instance) {
+        // Return false to cancel positioning
+    },
+
+    afterRepos(instance) {}
 });
 ```
 

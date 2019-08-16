@@ -17,7 +17,9 @@ function Widgetify(options) {
             closeWithKey: 'Escape',
 
             onShow: () => 0,
-            onHide: () => 0
+            onHide: () => 0,
+            beforeRepos: () => 0,
+            afterRepos: () => 0
         }, options),
 
         // Used listeners
@@ -48,6 +50,7 @@ function Widgetify(options) {
                 } else {
                     parent.appendChild(el);
                 }
+
             } else {
                 el.style.position = 'fixed';
 
@@ -57,8 +60,27 @@ function Widgetify(options) {
                 });
 
                 // Listen for resize events
+                let timeout = null;
                 that.listeners.push(
-                    on(window, ['scroll', 'resize'], () => that.reposition(), {capture: true})
+                    on(window, ['scroll', 'resize'], () => {
+
+                        // Re-calc position on window resize, scroll and wheel
+                        if (that.isVisible()) {
+                            if (timeout === null) {
+                                timeout = setTimeout(() => timeout = null, 100);
+
+                                // Update position on every frame
+                                requestAnimationFrame(function rs() {
+                                    that.reposition();
+                                    (timeout !== null) && requestAnimationFrame(rs);
+                                });
+                            } else {
+                                clearTimeout(timeout);
+                                timeout = setTimeout(() => timeout = null, 100);
+                            }
+                        }
+
+                    }, {capture: true})
                 );
             }
 
@@ -91,9 +113,11 @@ function Widgetify(options) {
         },
 
         reposition() {
+            const opt = that.options;
 
-            if (!that.options.inline) {
+            if (!opt.inline && opt.beforeRepos() !== false) {
                 that.nanopop.update(that.options.position);
+                opt.afterRepos();
             }
 
             return that;
@@ -164,8 +188,8 @@ function Widgetify(options) {
          * Destroys and removes ref and el from the dom
          */
         destroyAndRemove() {
-            that.destroy();
             const {ref, el} = that.options;
+            that.destroy();
             ref.remove();
             el.remove();
         }
