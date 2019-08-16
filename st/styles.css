@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+    background: linear-gradient(to bottom, #f0f8ff, #fff);
 }
 
 body header {
@@ -51,8 +51,44 @@ body header a:hover {
 
 main {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+main > section {
+    margin-bottom: 3em;
+}
+
+main > section > h3 {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #36425b;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+main > section > button {
+    border: none;
+    background: #3498db;
+    padding: 0.5em 0.75em;
+    color: white;
+    outline: none;
+}
+
+main > section > div {
+    padding: 2em 4em;
+    background: #2c3e50;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s 0.3s;
+}
+
+main > section > div.visible {
+    transition: opacity 0.3s;
+    visibility: visible;
+    opacity: 1;
 }
 
 @-webkit-keyframes fadeIn {

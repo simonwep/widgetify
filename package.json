@@ -6,6 +6,7 @@
     "keywords": [],
     "author": "Simon Reinisch <toports@gmx.de>",
     "license": "MIT",
+    "homepage": "https://github.com/Simonwep/widgetify#readme",
     "scripts": {
         "build": "webpack --mode production",
         "dev": "webpack-dev-server --mode development",
@@ -18,7 +19,6 @@
     "bugs": {
         "url": "https://github.com/Simonwep/widgetify/issues"
     },
-    "homepage": "https://github.com/Simonwep/widgetify#readme",
     "devDependencies": {
         "@babel/core": "^7.5.5",
         "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
