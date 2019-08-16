@@ -1,0 +1,33 @@
+{
+    "name": "@simonwep/widgetify",
+    "version": "0.0.0",
+    "description": "",
+    "main": "dist/widgetify.min.js",
+    "keywords": [],
+    "author": "Simon Reinisch <toports@gmx.de>",
+    "license": "MIT",
+    "scripts": {
+        "build": "webpack --mode production",
+        "dev": "webpack-dev-server --mode development",
+        "lint": "eslint ./src"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Simonwep/widgetify.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Simonwep/widgetify/issues"
+    },
+    "homepage": "https://github.com/Simonwep/widgetify#readme",
+    "devDependencies": {
+        "@babel/core": "^7.5.5",
+        "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
+        "babel-loader": "^8.0.6",
+        "eslint": "^6.1.0",
+        "eslint-loader": "^2.2.1",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.6",
+        "webpack-dev-server": "^3.8.0"
+    }
+}
