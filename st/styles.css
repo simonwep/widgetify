@@ -57,6 +57,7 @@ main {
 }
 
 main > section {
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: 2em;
     padding-bottom: 2em;
 }
@@ -86,6 +87,7 @@ main > section > button {
     padding: 0.5em 0.75em;
     color: white;
     outline: none;
+    cursor: pointer;
 }
 
 main > section > button.disabled {

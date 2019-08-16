@@ -18,8 +18,8 @@ function Widgetify(options) {
 
             onShow: () => 0,
             onHide: () => 0,
-            beforeRepos: () => 0,
-            afterRepos: () => 0
+            beforeRepositioning: () => 0,
+            afterRepositoning: () => 0
         }, options),
 
         // Used listeners
@@ -115,9 +115,9 @@ function Widgetify(options) {
         reposition() {
             const opt = that.options;
 
-            if (!opt.inline && opt.beforeRepos() !== false) {
+            if (!opt.inline && opt.beforeRepositioning() !== false) {
                 that.nanopop.update(that.options.position);
-                opt.afterRepos();
+                opt.afterRepositoning();
             }
 
             return that;
@@ -204,6 +204,6 @@ Widgetify.utils = {
 };
 
 // Export version
-Widgetify.version = '0.0.0';
+Widgetify.version = '0.1.0';
 
 export default Widgetify;

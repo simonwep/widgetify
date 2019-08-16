@@ -92,12 +92,12 @@ const widget = Widgetify({
     onShow(instance) {},
     onHide(instance) {},
 
-    // Before - and after repositioning eveents. 
-    beforeRepos(instance) {
+    // Before - and after repositioning events. 
+    beforeRepositioning(instance) {
         // Return false to cancel positioning
     },
 
-    afterRepos(instance) {}
+    afterRepositoning(instance) {}
 });
 ```
 
