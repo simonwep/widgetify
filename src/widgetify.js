@@ -11,8 +11,13 @@ function Widgetify(options) {
             ref: null,
             inline: false,
             disabled: false,
+            showAlways: false,
             padding: 8,
-            position: 'bottom-middle'
+            position: 'bottom-middle',
+            closeWithKey: 'Escape',
+
+            onShow: () => 0,
+            onHide: () => 0
         }, options),
 
         // Used listeners
@@ -57,13 +62,13 @@ function Widgetify(options) {
                 );
             }
 
-            if (opt.disabled) {
-                that.disable();
-            }
-
+            const ck = opt.closeWithKey;
             that.listeners.push(
                 // Listen for show events
                 on(ref, 'click', () => that.show()),
+
+                // Close with keyboard
+                on(document, 'keyup', e => (e.key === ck || e.code === ck) && that.hide()),
 
                 // Cancel selecting if the user taps behind the color picker
                 on(document, ['touchstart', 'mousedown'], e => {
@@ -74,30 +79,57 @@ function Widgetify(options) {
                 }, {capture: true})
             );
 
+            if (opt.disabled) {
+                that.disable();
+            }
+
+            if (opt.showAlways) {
+                that.show();
+            }
+
             return that;
         },
 
         reposition() {
+
             if (!that.options.inline) {
                 that.nanopop.update(that.options.position);
             }
+
+            return that;
         },
 
+        /**
+         * Shows the widget
+         */
         show() {
 
-            if (!that.options.disabled) {
+            if (!that.options.disabled && !that.isVisible()) {
                 that.options.el.classList.add('visible');
                 that.reposition();
+                that.options.onShow(that);
             }
 
             return that;
         },
 
+        /**
+         * Hides the widget
+         */
         hide() {
-            that.options.el.classList.remove('visible');
+            const {disabled, showAlways, el} = that.options;
+
+            if (!disabled && !showAlways && that.isVisible()) {
+                el.classList.remove('visible');
+                that.options.onHide(that);
+            }
+
             return that;
         },
 
+        /**
+         * Disables the widget
+         */
         disable() {
             that.hide();
             that.options.disabled = true;
@@ -105,22 +137,34 @@ function Widgetify(options) {
             return that;
         },
 
+        /**
+         * Enables the widget
+         */
         enable() {
             that.options.disabled = false;
             that.options.ref.classList.remove('disabled');
             return that;
         },
 
+        /**
+         * Checks whenever the widget is currently visible
+         */
         isVisible() {
             return that.options.el.classList.contains('visible');
         },
 
+        /**
+         * Destroys, e.g. removes all event listeners
+         */
         destroy() {
-
-            // Unbind events
             that.listeners.forEach(args => off(...args));
+        },
 
-            // Remove elements
+        /**
+         * Destroys and removes ref and el from the dom
+         */
+        destroyAndRemove() {
+            that.destroy();
             const {ref, el} = that.options;
             ref.remove();
             el.remove();
@@ -129,5 +173,13 @@ function Widgetify(options) {
 
     return that._init();
 }
+
+// Export utils
+Widgetify.utils = {
+    on, off, eventPath
+};
+
+// Export version
+Widgetify.version = '0.0.0';
 
 export default Widgetify;
