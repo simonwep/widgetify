@@ -57,7 +57,12 @@ main {
 }
 
 main > section {
-    margin-bottom: 3em;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+}
+
+main > section:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 main > section > h3 {
@@ -74,6 +79,10 @@ main > section > button {
     padding: 0.5em 0.75em;
     color: white;
     outline: none;
+}
+
+main > section > button.disabled {
+    cursor: not-allowed;
 }
 
 main > section > div {

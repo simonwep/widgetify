@@ -10,6 +10,8 @@ function Widgetify(options) {
             el: null,
             ref: null,
             inline: false,
+            disabled: false,
+            padding: 8,
             position: 'bottom-middle'
         }, options),
 
@@ -29,7 +31,7 @@ function Widgetify(options) {
                 }
             }
 
-            const {ref, el} = opt;
+            const {ref, el, padding} = opt;
 
             // Remove element, and insert it after the reference
             if (opt.inline) {
@@ -37,7 +39,7 @@ function Widgetify(options) {
                 el.remove();
 
                 if (ref.nextSibling) {
-                    parent.insertBefore(el, ref);
+                    parent.insertBefore(el, ref.nextSibling);
                 } else {
                     parent.appendChild(el);
                 }
@@ -45,12 +47,18 @@ function Widgetify(options) {
                 el.style.position = 'fixed';
 
                 // Otherwise, Setup nanopop engine
-                that.nanopop = Nanopop({el, ref});
+                that.nanopop = Nanopop({
+                    el, ref, padding
+                });
 
                 // Listen for resize events
                 that.listeners.push(
                     on(window, ['scroll', 'resize'], () => that.reposition(), {capture: true})
                 );
+            }
+
+            if (opt.disabled) {
+                that.disable();
             }
 
             that.listeners.push(
@@ -76,12 +84,31 @@ function Widgetify(options) {
         },
 
         show() {
-            that.options.el.classList.add('visible');
-            that.reposition();
+
+            if (!that.options.disabled) {
+                that.options.el.classList.add('visible');
+                that.reposition();
+            }
+
+            return that;
         },
 
         hide() {
             that.options.el.classList.remove('visible');
+            return that;
+        },
+
+        disable() {
+            that.hide();
+            that.options.disabled = true;
+            that.options.ref.classList.add('disabled');
+            return that;
+        },
+
+        enable() {
+            that.options.disabled = false;
+            that.options.ref.classList.remove('disabled');
+            return that;
         },
 
         isVisible() {
